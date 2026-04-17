@@ -1,0 +1,663 @@
+﻿<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yeşil Vadi Arsa &amp; Gayrimenkul | Dijital Kartvizit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #5f6b7a;
+      --brand: #1e9c57;
+      --brand-strong: #157f47;
+      --border: rgba(15, 23, 42, 0.08);
+      --shadow: 0 18px 40px rgba(15, 23, 42, 0.10);
+    }
+    body.dark {
+      --bg: #0b1020;
+      --card: #111829;
+      --text: #e7edf5;
+      --muted: #9fb2cc;
+      --border: rgba(231, 237, 245, 0.08);
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(circle at 10% 20%, rgba(30,156,87,0.16), transparent 32%),
+                  radial-gradient(circle at 80% 0%, rgba(21,127,71,0.18), transparent 38%),
+                  var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+      min-height: 100vh;
+      padding: 32px 18px 48px;
+    }
+    .shell {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      height: 100%;
+    }
+    .hero-card{ grid-column:1/-1; }
+    header.hero {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+    .profile {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.22);
+    }
+    .profile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .logo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .logo {
+      width: 110px;
+      height: auto;
+      display: block;
+    }
+    .brand-block { display: flex; flex-direction: column; gap: 10px; align-items: center; text-align: center; }
+    .person-name {
+      margin: 6px 0 0;
+      font-weight: 700;
+      font-size: clamp(16px, 1.7vw, 18px);
+      color: var(--text);
+    }
+    .overline { letter-spacing: 0.16em; text-transform: uppercase; font-size: 12px; color: var(--muted); margin: 0; }
+    h1 { margin: 0; font-size: clamp(24px, 2.6vw, 30px); }
+    .role { margin: 0; font-size: clamp(14px, 1.6vw, 16px); color: var(--muted); }
+    .summary { margin: 6px 0 0; color: var(--muted); line-height: 1.5; }
+
+    .theme-toggle {
+      align-self: start;
+      justify-self: end;
+      border: none;
+      background: var(--text);
+      color: var(--card);
+      border-radius: 12px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+    .theme-toggle:hover { transform: translateY(-2px); background: var(--brand-strong); }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--card);
+      background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+      font-weight: 700;
+      box-shadow: 0 10px 24px rgba(30,156,87,0.25);
+      transition: transform .18s ease, box-shadow .18s ease, filter .2s ease;
+    }
+    .chip:hover { transform: translateY(-2px); filter: brightness(1.04); }
+    .chip.secondary { background: rgba(15, 23, 42, 0.08); color: var(--text); box-shadow: none; }
+    body.dark .chip.secondary { background: rgba(231, 237, 245, 0.08); }
+
+    .section-title { margin: 0 0 14px; font-size: 18px; letter-spacing: 0.01em; }
+
+    .info-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+    .info-card {
+      padding: 14px 14px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.65);
+      color: var(--text);
+      display: grid;
+      gap: 6px;
+      transition: transform .15s ease, box-shadow .2s ease;
+    }
+    body.dark .info-card { background: rgba(17,24,41,0.8); }
+    .info-card:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(0,0,0,0.08); }
+    .info-card .label { font-weight: 700; font-size: 14px; }
+    .info-card .value { color: var(--muted); margin: 0; }
+    .info-card a { color: inherit; text-decoration: none; }
+    .info-card .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 10px; background: rgba(30,156,87,0.08); color: var(--brand-strong); font-size: 13px; font-weight: 700; }
+    body.dark .tag { background: rgba(231,237,245,0.08); color: #a7ffd3; }
+
+    .projects-carousel { position: relative; overflow: hidden; border-radius: 14px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(30,156,87,0.12), rgba(21,127,71,0.06)); }
+    body.dark .projects-carousel { background: linear-gradient(135deg, rgba(21,127,71,0.16), rgba(11,16,32,0.9)); }
+    .proj-track { display: flex; transition: transform 400ms ease; will-change: transform; }
+    .project {
+      min-width: 100%;
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(30,156,87,0.12), rgba(21,127,71,0.06));
+      color: var(--text);
+      display: grid;
+      gap: 6px;
+      transition: transform .18s ease, box-shadow .24s ease;
+    }
+    body.dark .project { background: linear-gradient(135deg, rgba(21,127,71,0.16), rgba(11,16,32,0.9)); }
+    .project:hover { transform: translateY(-3px); box-shadow: 0 16px 30px rgba(0,0,0,0.18); }
+    .project .place { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+    .project .title { margin: 0; font-size: 17px; font-weight: 700; }
+    .project a { text-decoration: none; color: inherit; display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }
+    .proj-nav { position: absolute; inset: 0; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
+    .proj-btn { pointer-events: auto; border: none; background: rgba(0,0,0,0.15); color: #fff; width: 38px; height: 38px; border-radius: 999px; cursor: pointer; display: grid; place-items: center; font-size: 18px; transition: background .2s, transform .2s; margin: 0 10px; }
+    .proj-btn:hover { transform: scale(1.05); }
+    body.dark .proj-btn { background: rgba(255,255,255,0.15); }
+    .proj-dots { display: flex; justify-content: center; gap: 8px; padding: 10px 0 4px; }
+    .proj-dot { width: 8px; height: 8px; border-radius: 999px; background: rgba(0,0,0,0.28); cursor: pointer; transition: transform .2s, background .2s; border: none; }
+    body.dark .proj-dot { background: rgba(255,255,255,0.34); }
+    .proj-dot.active { transform: scale(1.3); background: var(--brand-strong); }
+
+    /* Kampanya karuseli */
+    .campaigns { display: grid; gap: 12px; }
+    .carousel-shell { position: relative; overflow: hidden; border-radius: 14px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(30,156,87,0.12), rgba(21,127,71,0.06)); }
+    body.dark .carousel-shell { background: linear-gradient(135deg, rgba(21,127,71,0.16), rgba(11,16,32,0.9)); }
+    .camp-track { display: flex; transition: transform 400ms ease; will-change: transform; }
+    .camp-slide { min-width: 100%; padding: 18px; display: grid; gap: 10px; color: var(--text); }
+    .camp-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; background: rgba(30,156,87,0.12); color: var(--brand-strong); font-weight: 700; font-size: 13px; }
+    body.dark .camp-badge { background: rgba(231,237,245,0.08); color: #a7ffd3; }
+    .camp-title { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: 0.01em; }
+    .camp-desc { margin: 0; color: var(--muted); line-height: 1.5; }
+    .camp-cta { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 12px; background: linear-gradient(135deg, var(--brand), var(--brand-strong)); color: #fff; text-decoration: none; font-weight: 700; box-shadow: 0 10px 22px rgba(30,156,87,0.25); transition: transform .18s ease, filter .18s ease; width: fit-content; }
+    .camp-cta:hover { transform: translateY(-2px); filter: brightness(1.05); }
+    .camp-nav { position: absolute; inset: 0; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
+    .camp-btn { pointer-events: auto; border: none; background: rgba(0,0,0,0.15); color: #fff; width: 38px; height: 38px; border-radius: 999px; cursor: pointer; display: grid; place-items: center; font-size: 18px; transition: background .2s, transform .2s; margin: 0 10px; }
+    .camp-btn:hover { transform: scale(1.05); }
+    body.dark .camp-btn { background: rgba(255,255,255,0.15); }
+    .camp-dots { display: flex; justify-content: center; gap: 8px; padding: 10px 0 4px; }
+    .camp-dot { width: 8px; height: 8px; border-radius: 999px; background: rgba(0,0,0,0.28); cursor: pointer; transition: transform .2s, background .2s; border: none; }
+    body.dark .camp-dot { background: rgba(255,255,255,0.34); }
+    .camp-dot.active { transform: scale(1.3); background: var(--brand-strong); }
+
+    .about { line-height: 1.6; color: var(--muted); margin: 0; }
+    footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 12px; }
+
+    @media (min-width: 900px) {
+      header.hero{
+        align-items: flex-start;
+        text-align: left;
+        padding-right: 12px;
+      }
+      .brand-block{
+        align-items: flex-start;
+        text-align: left;
+      }
+      .cta-row{ justify-content: flex-start; }
+    }
+
+    @media (min-width: 1100px){
+      .shell{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero-card{ grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 720px) {
+      body { padding: 20px 14px 36px; }
+      .card { padding: 18px; }
+      .profile { width: 120px; height: 120px; }
+      .brand-block { order: 2; }
+      .theme-toggle { justify-self: start; padding: 8px 12px; font-size: 14px; }
+      h1 { font-size: 22px; }
+      .summary { font-size: 14px; }
+      .cta-row { flex-direction: column; }
+      .info-grid { grid-template-columns: 1fr; }
+      .project { padding: 14px; }
+      .project .title { font-size: 16px; }
+      .project .place { letter-spacing: 0.06em; }
+      .camp-slide { padding: 16px; }
+      .proj-btn { width: 34px; height: 34px; font-size: 16px; margin: 0 6px; }
+      .projects-carousel { border-radius: 12px; }
+      .proj-dots { padding: 8px 0 0; }
+      .project .title { font-size: 15px; }
+      .project { gap: 4px; }
+    }
+
+    @media (max-width: 420px) {
+      body { padding: 16px 12px 30px; }
+      .card { padding: 16px; }
+      .chip { width: 100%; justify-content: center; }
+      .info-card { padding: 12px; }
+      h1 { font-size: 20px; }
+      .role { font-size: 14px; }
+      .logo { width: 90px; }
+      .profile { width: 110px; height: 110px; border-radius: 18px; }
+      .logo-wrap { align-items: center; }
+      .logo-name { text-align: center; }
+      .projects-carousel { border-radius: 10px; }
+      .project { padding: 12px; }
+      .project .title { font-size: 14px; }
+      .proj-btn { width: 32px; height: 32px; font-size: 15px; }
+      .proj-dots { gap: 6px; padding: 6px 0 0; }
+      .cta-row { gap: 8px; }
+    }
+  </style>
+</head>
+<body class="light">
+  <div class="shell">
+    <div class="card hero-card">
+      <header class="hero">
+        <div class="brand-block">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Tema değiştir">🌙 / ☀️</button>
+          <div class="profile">
+            <img id="profile-img" src="ben.jpg" alt="" loading="lazy" />
+          </div>
+          <p class="person-name" id="person-name">Yunus Emre Demirel</p>
+          <div class="logo-wrap">
+            <img id="logo-img" class="logo" src="logo.png" alt="" loading="lazy" />
+          </div>
+          <p class="overline" id="title-overline">Satış Danışmanı</p>
+          <h1 id="company-name">Yeşil Vadi Arsa &amp; Gayrimenkul</h1>
+          <p class="role" id="role-line">Arsa satışları ve yeni konut projeleri</p>
+          <p class="summary" id="summary">Müşterilerimiz telefon, e-posta ve WhatsApp ile bize hızla ulaşabilir; güncel arsa ve konut projelerimizi tek ekranda inceleyebilir.</p>
+          <div class="cta-row">
+            <a id="cta-phone" class="chip" href="tel:4442772"><i class="fa-solid fa-phone"></i> 444 27 72</a>
+            <a id="cta-whatsapp" class="chip secondary" href="https://wa.me/905412217845" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+            <a id="cta-email" class="chip secondary" href="mailto:info@yesilvadiarsaofisi.com.tr"><i class="fa-regular fa-envelope"></i> Mail Gönder</a>
+            <a id="cta-maps" class="chip secondary" href="https://maps.google.com/?q=40.995603821814655,28.795072882968686" target="_blank" rel="noopener"><i class="fa-solid fa-location-dot"></i> Konum</a>
+            <a id="cta-instagram" class="chip secondary" href="https://www.instagram.com/yesilvadiarsa" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i> Instagram</a>
+            <a id="cta-website" class="chip secondary" href="https://www.yesilvadiarsaofisi.com.tr/" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Web Sitesi</a>
+            <a id="cta-catalog" class="chip secondary" href="https://fliphtml5.com/bookcase/zlumd/" target="_blank" rel="noopener"><i class="fa-solid fa-folder-open"></i> Kataloglara Bak</a>
+          </div>
+        </div>
+      </header>
+    </div>
+
+    <div class="card" id="projects">
+      <h2 class="section-title" id="projects-title">Projeler</h2>
+      <div class="projects-carousel" aria-roledescription="carousel">
+        <div class="proj-track" id="proj-track">
+          <!-- JS ile doldurulur -->
+        </div>
+        <div class="proj-nav" aria-hidden="false">
+          <button class="proj-btn" id="proj-prev" aria-label="Önceki">‹</button>
+          <button class="proj-btn" id="proj-next" aria-label="Sonraki">›</button>
+        </div>
+      </div>
+      <div class="proj-dots" id="proj-dots" aria-label="Proje sayfaları"></div>
+    </div>
+
+    <div class="card" id="campaigns">
+      <h2 class="section-title" id="campaigns-title">Kampanyalar</h2>
+      <div class="campaigns">
+        <div class="carousel-shell" aria-roledescription="carousel">
+          <div class="camp-track" id="camp-track">
+            <!-- JS ile doldurulur -->
+          </div>
+          <div class="camp-nav" aria-hidden="false">
+            <button class="camp-btn" id="camp-prev" aria-label="Önceki">‹</button>
+            <button class="camp-btn" id="camp-next" aria-label="Sonraki">›</button>
+          </div>
+        </div>
+        <div class="camp-dots" id="camp-dots" aria-label="Kampanya sayfaları"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="section-title" id="about-title">Hakkımızda</h2>
+      <p class="about" id="about-text">Yeşil Vadi Arsa &amp; Gayrimenkul olarak tapulu arsa yatırımı ve yeni konut projelerini güvenilir, şeffaf ve uzman kadromuzla sunuyoruz. Dijital kartvizitimiz, bize ulaşmanın en hızlı yolu ve projelerimizi tek dokunuşla inceleme alanınız.</p>
+    </div>
+
+    <footer>
+      <span id="footer-text">© Yeşil Vadi Arsa &amp; Gayrimenkul • Dijital kartvizit</span>
+    </footer>
+  </div>
+
+  <script>
+    // Profil verisini yükle ve sayfayı doldur (tek şablon, çok kişi)
+    async function loadProfilesData() {
+      const res = await fetch('data/profiles.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('profiles.json yüklenemedi');
+      return await res.json();
+    }
+
+    function getProfileIdFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      return (params.get('id') || params.get('p') || '').trim();
+    }
+
+    function setText(id, text) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text ?? '';
+    }
+    function setAttr(id, attr, value) {
+      const el = document.getElementById(id);
+      if (el) el.setAttribute(attr, value ?? '');
+    }
+    function setHref(id, href) {
+      const el = document.getElementById(id);
+      if (el) el.href = href ?? '#';
+    }
+
+    function normalizeUrl(url) {
+      if (!url) return '';
+      return String(url);
+    }
+
+    function renderProjects(projects) {
+      const track = document.getElementById('proj-track');
+      track.innerHTML = '';
+
+      const list = Array.isArray(projects) ? projects : [];
+      if (list.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'project';
+        empty.innerHTML = `
+          <p class="place">Bilgi</p>
+          <p class="title">Henüz proje eklenmedi</p>
+          <a href="#" onclick="return false;">Yakında <i class="fa-solid fa-clock"></i></a>
+        `;
+        track.appendChild(empty);
+        return;
+      }
+
+      list.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'project';
+        const place = p.place ?? '';
+        const title = p.title ?? '';
+        const url = normalizeUrl(p.url);
+        card.innerHTML = `
+          <p class="place">${place}</p>
+          <p class="title">${title}</p>
+          <a href="${url}" target="_blank" rel="noopener">Proje Detayı <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        `;
+        track.appendChild(card);
+      });
+    }
+
+    function renderCampaigns(campaigns) {
+      const track = document.getElementById('camp-track');
+      track.innerHTML = '';
+
+      const list = Array.isArray(campaigns) ? campaigns : [];
+      if (list.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'camp-slide';
+        empty.innerHTML = `
+          <span class="camp-badge"><i class="fa-solid fa-circle-info"></i> Bilgi</span>
+          <p class="camp-title">Henüz kampanya eklenmedi</p>
+          <p class="camp-desc">İsterseniz bu alanı kaldırabilir veya kampanyaları JSON’dan ekleyebilirsiniz.</p>
+          <a class="camp-cta" href="#projects" data-scroll><i class="fa-solid fa-folder-open"></i> Projelere Bak</a>
+        `;
+        track.appendChild(empty);
+        return;
+      }
+
+      list.forEach(c => {
+        const slide = document.createElement('div');
+        slide.className = 'camp-slide';
+        const badgeIcon = c.badgeIcon ? `fa-solid ${c.badgeIcon}` : 'fa-solid fa-circle-info';
+        const badgeText = c.badgeText ?? 'Bilgi';
+        const title = c.title ?? '';
+        const desc = c.desc ?? '';
+        const ctaText = c.ctaText ?? 'Detay';
+        const ctaIcon = c.ctaIcon ? `fa-solid ${c.ctaIcon}` : 'fa-solid fa-arrow-up-right-from-square';
+        const ctaUrl = normalizeUrl(c.ctaUrl);
+
+        slide.innerHTML = `
+          <span class="camp-badge"><i class="${badgeIcon}"></i> ${badgeText}</span>
+          <p class="camp-title">${title}</p>
+          <p class="camp-desc">${desc}</p>
+          <a class="camp-cta" href="${ctaUrl}" target="_blank" rel="noopener"><i class="${ctaIcon}"></i> ${ctaText}</a>
+        `;
+        track.appendChild(slide);
+      });
+    }
+
+    function renderProfile(profile) {
+      // Head/meta (title)
+      document.title = `${profile.companyName ?? 'Dijital Kartvizit'} | Dijital Kartvizit`;
+
+      // Görseller
+      setAttr('profile-img', 'src', profile.profileImage ?? 'ben.jpg');
+      setAttr('profile-img', 'alt', profile.personName ?? '');
+      setAttr('logo-img', 'src', profile.logoImage ?? 'logo.png');
+      setAttr('logo-img', 'alt', `${profile.companyName ?? 'Logo'} logosu`);
+
+      // Metinler
+      setText('person-name', profile.personName);
+      setText('title-overline', profile.titleOverline);
+      setText('company-name', profile.companyName);
+      setText('role-line', profile.roleLine);
+      setText('summary', profile.summary);
+
+      // CTA linkleri
+      setHref('cta-phone', `tel:${profile.primaryPhoneTel ?? ''}`);
+      document.getElementById('cta-phone').innerHTML = `<i class="fa-solid fa-phone"></i> ${profile.primaryPhoneLabel ?? 'Ara'}`;
+
+      setHref('cta-whatsapp', `https://wa.me/${profile.whatsAppNumberE164 ?? ''}`);
+      setHref('cta-email', `mailto:${profile.email ?? ''}`);
+      setHref('cta-maps', `https://maps.google.com/?q=${encodeURIComponent(profile.mapsQuery ?? '')}`);
+      setHref('cta-instagram', normalizeUrl(profile.instagramUrl));
+      setHref('cta-website', normalizeUrl(profile.websiteUrl));
+      setHref('cta-catalog', normalizeUrl(profile.catalogUrl));
+
+      // Başlıklar + içerik
+      setText('projects-title', profile.projectsTitle ?? 'Projeler');
+      renderProjects(profile.projects);
+
+      setText('campaigns-title', profile.campaignsTitle ?? 'Kampanyalar');
+      renderCampaigns(profile.campaigns);
+
+      setText('about-title', profile.aboutTitle ?? 'Hakkımızda');
+      setText('about-text', profile.aboutText ?? '');
+      setText('footer-text', profile.footerText ?? '');
+    }
+
+    // Tema tercihini hatırla
+    (function() {
+      const stored = localStorage.getItem('theme');
+      if (stored === 'dark') document.body.classList.add('dark');
+      if (stored === 'light') document.body.classList.remove('dark');
+    })();
+
+    const toggle = document.getElementById('theme-toggle');
+    const updateLabel = () => {
+      const dark = document.body.classList.contains('dark');
+      toggle.textContent = dark ? '☀️' : '🌙';
+      toggle.setAttribute('aria-pressed', dark);
+    };
+    updateLabel();
+
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      updateLabel();
+    });
+
+    // Yumuşak kaydırma
+    document.querySelectorAll('[data-scroll]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const targetId = link.getAttribute('href').slice(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Profil seçimi + sayfayı doldur
+    (async function initProfile() {
+      try {
+        const data = await loadProfilesData();
+        const requestedId = getProfileIdFromUrl();
+        const profiles = Array.isArray(data.profiles) ? data.profiles : [];
+        const fallbackId = data.defaultProfileId || (profiles[0] && profiles[0].id);
+        const chosen = profiles.find(p => p.id === requestedId) || profiles.find(p => p.id === fallbackId) || profiles[0];
+        if (chosen) renderProfile(chosen);
+      } catch (err) {
+        console.error(err);
+      }
+    })();
+
+    // Proje karuseli
+    (function() {
+      const track = document.getElementById('proj-track');
+      const prev = document.getElementById('proj-prev');
+      const next = document.getElementById('proj-next');
+      const dotsWrap = document.getElementById('proj-dots');
+      let slides = Array.from(track.children);
+      let idx = 0;
+      let timer = null;
+
+      function buildDots() {
+        dotsWrap.innerHTML = '';
+        slides = Array.from(track.children);
+        slides.forEach((_, i) => {
+          const b = document.createElement('button');
+          b.className = 'proj-dot' + (i === 0 ? ' active' : '');
+          b.setAttribute('aria-label', `${i + 1}. proje`);
+          b.dataset.idx = i;
+          b.addEventListener('click', () => { slideTo(i); startAuto(); });
+          dotsWrap.appendChild(b);
+        });
+      }
+
+      function updateDots() {
+        Array.from(dotsWrap.children).forEach((d, k) => d.classList.toggle('active', k === idx));
+      }
+
+      function slideTo(i) {
+        slides = Array.from(track.children);
+        idx = (i + slides.length) % slides.length;
+        track.style.transform = `translateX(-${idx * 100}%)`;
+        updateDots();
+      }
+
+      function startAuto() {
+        stopAuto();
+        timer = setInterval(() => slideTo(idx + 1), 5000);
+      }
+      function stopAuto() { if (timer) { clearInterval(timer); timer = null; } }
+
+      prev.addEventListener('click', () => { slideTo(idx - 1); startAuto(); });
+      next.addEventListener('click', () => { slideTo(idx + 1); startAuto(); });
+
+      let startX = null;
+      track.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; stopAuto(); }, { passive: true });
+      track.addEventListener('touchmove', (e) => {
+        if (startX === null) return;
+        const dx = e.touches[0].clientX - startX;
+        if (Math.abs(dx) > 40) {
+          slideTo(idx + (dx < 0 ? 1 : -1));
+          startX = null;
+        }
+      }, { passive: true });
+      track.addEventListener('touchend', () => { startX = null; startAuto(); });
+
+      buildDots();
+      startAuto();
+
+      // İçerik (profil) değişince otomatik yenile
+      const mo = new MutationObserver(() => {
+        slides = Array.from(track.children);
+        buildDots();
+        slideTo(Math.min(idx, slides.length - 1));
+      });
+      mo.observe(track, { childList: true });
+    })();
+
+    // Kampanya karuseli
+    (function() {
+      const track = document.getElementById('camp-track');
+      const prev = document.getElementById('camp-prev');
+      const next = document.getElementById('camp-next');
+      const dotsWrap = document.getElementById('camp-dots');
+      let slides = Array.from(track.children);
+      let idx = 0;
+      let timer = null;
+
+      function buildDots() {
+        dotsWrap.innerHTML = '';
+        slides = Array.from(track.children);
+        slides.forEach((_, i) => {
+          const b = document.createElement('button');
+          b.className = 'camp-dot' + (i === 0 ? ' active' : '');
+          b.setAttribute('aria-label', `${i + 1}. kampanya`);
+          b.dataset.idx = i;
+          b.addEventListener('click', () => { slideTo(i); startAuto(); });
+          dotsWrap.appendChild(b);
+        });
+      }
+
+      function updateDots() {
+        Array.from(dotsWrap.children).forEach((d, k) => d.classList.toggle('active', k === idx));
+      }
+
+      function slideTo(i) {
+        slides = Array.from(track.children);
+        idx = (i + slides.length) % slides.length;
+        track.style.transform = `translateX(-${idx * 100}%)`;
+        updateDots();
+      }
+
+      function startAuto() {
+        stopAuto();
+        timer = setInterval(() => slideTo(idx + 1), 4500);
+      }
+      function stopAuto() { if (timer) { clearInterval(timer); timer = null; } }
+
+      prev.addEventListener('click', () => { slideTo(idx - 1); startAuto(); });
+      next.addEventListener('click', () => { slideTo(idx + 1); startAuto(); });
+
+      let startX = null;
+      track.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; stopAuto(); }, { passive: true });
+      track.addEventListener('touchmove', (e) => {
+        if (startX === null) return;
+        const dx = e.touches[0].clientX - startX;
+        if (Math.abs(dx) > 40) {
+          slideTo(idx + (dx < 0 ? 1 : -1));
+          startX = null;
+        }
+      }, { passive: true });
+      track.addEventListener('touchend', () => { startX = null; startAuto(); });
+
+      buildDots();
+      startAuto();
+
+      // İçerik (profil) değişince otomatik yenile
+      const mo = new MutationObserver(() => {
+        slides = Array.from(track.children);
+        buildDots();
+        slideTo(Math.min(idx, slides.length - 1));
+      });
+      mo.observe(track, { childList: true });
+    })();
+  </script>
+</body>
+</html>

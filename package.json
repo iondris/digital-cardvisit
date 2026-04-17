@@ -1,0 +1,9 @@
+{
+  "name": "yeni-kartvizit",
+  "private": true,
+  "scripts": {
+    "serve": "npx --yes serve -l 3000",
+    "generate:cards": "node tools/generate-card-pages.js"
+  }
+}
+
