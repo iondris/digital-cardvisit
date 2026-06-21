@@ -1,44 +1,118 @@
-## Dijital Kartvizit (Tek Şablon, Çok Kişi)
+# Digital Cardvisit
 
-Bu proje **tek bir `index.html`** ile çalışır. Kişi bilgileri `data/profiles.json` içinden okunur.
+A static digital business card application that allows individuals or companies to create multiple digital cards using a single reusable template.
 
-### 1) Kişi kartı nasıl açılır?
+## 🚀 About the Project
 
-- **Query param ile (tek dosya, en basit)**:
-  - `index.html?id=yunus`
-  - `index.html?id=ornek`
+Digital Cardvisit is a web project developed to make digital business card creation simple and scalable. Instead of creating a separate HTML file for each person, profile data is stored in a JSON file and rendered dynamically through a shared template.
 
-### 2) “Ben URL’de ?id görmek istemiyorum” (tek tek sayfa yazmadan)
+With this structure, adding a new person only requires adding a new profile object to the `data/profiles.json` file.
 
-`profiles.json` içindeki her profil için otomatik olarak şu dosyalar üretilir:
+## 🛠️ Technologies Used
 
-- `cards/<id>/index.html`
+* HTML
+* CSS
+* JavaScript
+* JSON
+* Node.js
 
-Bu dosyalar sadece **redirect** eder:
-- `cards/yunus/` → `index.html?id=yunus`
+## ✨ Features
 
-Oluşturmak için:
+* Multiple digital cards using a single HTML template
+* Dynamic profile management with JSON
+* Custom URL structure for each profile
+* Automatic card page generation
+* Easy local development setup
+* Scalable structure for personal or company use
+
+## 📁 Project Structure
 
 ```bash
-npm run generate:cards
+digital-cardvisit/
+├── cards/
+├── data/
+│   └── profiles.json
+├── tools/
+├── index.html
+├── package.json
+└── README.md
 ```
 
-### 3) Local çalıştırma
+## ⚙️ Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/iondris/digital-cardvisit.git
+cd digital-cardvisit
+npm install
+```
+
+Start the local server:
 
 ```bash
 npm run serve
 ```
 
-Sonra:
-- `http://localhost:3000/index.html?id=yunus`
-- `http://localhost:3000/cards/yunus/`
+Then open one of the following URLs in your browser:
 
-### 4) Yeni kişi ekleme
+```bash
+http://localhost:3000/index.html?id=yunus
+http://localhost:3000/cards/yunus/
+```
 
-`data/profiles.json` içindeki `profiles` dizisine yeni bir obje ekleyin ve benzersiz bir `id` verin.
-Sonra (2. yöntemi kullanıyorsanız) tekrar çalıştırın:
+## 👤 Adding a New Profile
+
+To add a new person, add a new object to the `profiles` array inside `data/profiles.json`.
+
+Example profile structure:
+
+```json
+{
+  "id": "example",
+  "name": "Example User",
+  "title": "Software Developer",
+  "email": "example@example.com",
+  "phone": "+90 555 000 00 00"
+}
+```
+
+To generate a separate card page for each profile, run:
 
 ```bash
 npm run generate:cards
 ```
 
+This command creates redirect pages in the following structure:
+
+```bash
+cards/<id>/index.html
+```
+
+Example:
+
+```bash
+cards/yunus/
+```
+
+## 🎯 What I Learned
+
+* Managing dynamic content with JSON
+* Rendering reusable UI content with JavaScript
+* Creating multiple profile pages from a single template
+* Building scalable static web project structures
+* Using Node.js scripts for automated file generation
+* Designing a real-world product-oriented web project
+
+## 📌 Future Improvements
+
+* Adding an admin panel
+* Adding QR code generation support
+* Creating multiple card themes
+* Making profile data editable through a form
+* Improving the mobile user experience
+
+## 👤 Developer
+
+Yunus Emre
+GitHub: https://github.com/iondris
